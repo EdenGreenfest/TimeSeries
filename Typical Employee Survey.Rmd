@@ -1,0 +1,749 @@
+---
+title: "Typical_Employees"
+author: "Eden Greenfest"
+date: "2025-02-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Create Data Frame
+> 
+> Name <- c("Ronak","Sam","Joe","Mary","Jane","Sally")
+> Age <- c(21,24,20,15,19,22)
+> Gender <- c("M","M","M","F","F","F")
+> GPA <- c(3.7,2.9,3.1,4.0,3.4,3.5)
+> myDataFrame <- data.frame(Name,Age,Gender,GPA)
+> myDataFrame
+   Name Age Gender GPA
+1 Ronak  21      M 3.7
+2   Sam  24      M 2.9
+3   Joe  20      M 3.1
+4  Mary  15      F 4.0
+5  Jane  19      F 3.4
+6 Sally  22      F 3.5
+> by(myDataFrame$Age,myDataFrame$Gender,mean)?
++ 
++ w
+Error in if (type == "package") package <- topic : 
+  the condition has length > 1
+> ?by(myDataFrame$Age,myDataFrame$Gender,mean)
+> 
+> library(readxl)
+> Typical_Employee_Survey_Data <- read_excel("Downloads/Typical_Employee_Survey_Data.xlsx", 
++     col_names = FALSE)
+Error: `path` does not exist: ‘Downloads/Typical_Employee_Survey_Data.xlsx’
+> library(readxl)
+> Typical_Employee_Survey_Data <- read_excel("Downloads/Typical_Employee_Survey_Data.xlsx", 
++     col_names = FALSE)
+New names:                                                                     
+• `` -> `...1`
+• `` -> `...2`
+• `` -> `...3`
+• `` -> `...4`
+• `` -> `...5`
+• `` -> `...6`
+• `` -> `...7`
+• `` -> `...8`
+• `` -> `...9`
+• `` -> `...10`
+• `` -> `...11`
+> View(Typical_Employee_Survey_Data)
+> ?colnames
+> colnames(data) <- c("Age", "Gender", "Job Satisfaction", "Job Characteristics", "Years worked for present Employer")  # Change to your actual column names
+Error in `colnames<-`(`*tmp*`, value = c("Age", "Gender", "Job Satisfaction",  : 
+  attempt to set 'colnames' on an object with less than two dimensions
+> colnames(data) <- c("Age", "Gender", "Job Satisfaction", "Job Characteristics", "Years Worked for Present Employer", "Promotion Likliness", "Can Make Decisions", "Budgetary Decisions", "Pride in Organization", "Loyalty", "Culture")
+Error in `colnames<-`(`*tmp*`, value = c("Age", "Gender", "Job Satisfaction",  : 
+  attempt to set 'colnames' on an object with less than two dimensions
+> data <- read.csv("Typical_Employee_Survey_Data", header=FALSE)
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'Typical_Employee_Survey_Data': No such file or directory
+> getwd()
+[1] "/Users/edengreenfest"
+> data <- read.csv("C:/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.csv", header=FALSE)
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'C:/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.csv': No such file or directory
+> data <- read.csv("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.csv", header=FALSE)
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.csv': No such file or directory
+> > data <- read.csv("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsv", header=FALSE)
+Error: unexpected '>' in ">"
+> data <- read.csv("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsv", header=FALSE)
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsv': No such file or directory
+> data <- read.csv("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsx", header=FALSE)
+Warning messages:
+1: In read.table(file = file, header = header, sep = sep, quote = quote,  :
+  line 1 appears to contain embedded nulls
+2: In read.table(file = file, header = header, sep = sep, quote = quote,  :
+  line 2 appears to contain embedded nulls
+3: In read.table(file = file, header = header, sep = sep, quote = quote,  :
+  line 3 appears to contain embedded nulls
+4: In read.table(file = file, header = header, sep = sep, quote = quote,  :
+  line 5 appears to contain embedded nulls
+5: In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  EOF within quoted string
+6: In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  embedded nul(s) found in input
+> install.packages("readxl")
+Error in install.packages : Updating loaded packages
+
+Restarting R session...
+
+> install.packages("readxl")
+trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.4/readxl_1.4.3.tgz'
+Content type 'application/x-gzip' length 1538743 bytes (1.5 MB)
+==================================================
+downloaded 1.5 MB
+
+
+The downloaded binary packages are in
+	/var/folders/b7/40_hjv_n5px6k9njtdff4kg00000gn/T//Rtmp69yIMb/downloaded_packages
+> library(readxl)
+> 
+> data <- read_excel("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsx", col_names = FALSE)
+New names:                                                                                       
+• `` -> `...1`
+• `` -> `...2`
+• `` -> `...3`
+• `` -> `...4`
+• `` -> `...5`
+• `` -> `...6`
+• `` -> `...7`
+• `` -> `...8`
+• `` -> `...9`
+• `` -> `...10`
+• `` -> `...11`
+> file_ext <- tools::file_ext("/Users/edengreenfest/Downloads/Typical_Employee_Survey_Data.xlsx")
+> print(file_ext)
+[1] "xlsx"
+> colnames(data) <- c("Age", "Gender", "Job Satisfaction", "Job Characteristics", "Years Worked for Present Employer", "Promotion Likliness", "Can Make Decisions", "Budgetary Decisions", "Pride in Organization", "Loyalty", "Culture")
+> 
+> colnames(data)
+ [1] "Age"                               "Gender"                           
+ [3] "Job Satisfaction"                  "Job Characteristics"              
+ [5] "Years Worked for Present Employer" "Promotion Likliness"              
+ [7] "Can Make Decisions"                "Budgetary Decisions"              
+ [9] "Pride in Organization"             "Loyalty"                          
+[11] "Culture"                          
+> 
+> summary(data)
+      Age           Gender      Job Satisfaction Job Characteristics
+ Min.   :20.0   Min.   :1.000   Min.   :1.000    Min.   :1.000      
+ 1st Qu.:33.0   1st Qu.:1.000   1st Qu.:1.000    1st Qu.:2.000      
+ Median :38.0   Median :1.000   Median :1.000    Median :5.000      
+ Mean   :39.1   Mean   :1.426   Mean   :1.631    Mean   :3.705      
+ 3rd Qu.:44.0   3rd Qu.:2.000   3rd Qu.:2.000    3rd Qu.:5.000      
+ Max.   :64.0   Max.   :2.000   Max.   :4.000    Max.   :5.000      
+ Years Worked for Present Employer Promotion Likliness Can Make Decisions Budgetary Decisions
+ Min.   : 0.080                    Min.   :1.000       Min.   :1.000      Min.   :1.000      
+ 1st Qu.: 2.000                    1st Qu.:2.000       1st Qu.:2.000      1st Qu.:1.000      
+ Median : 5.000                    Median :4.000       Median :2.000      Median :1.000      
+ Mean   : 8.224                    Mean   :3.287       Mean   :2.279      Mean   :1.451      
+ 3rd Qu.:11.000                    3rd Qu.:5.000       3rd Qu.:3.000      3rd Qu.:2.000      
+ Max.   :52.250                    Max.   :5.000       Max.   :4.000      Max.   :2.000      
+ Pride in Organization    Loyalty         Culture     
+ Min.   :1.000         Min.   :1.000   Min.   :1.000  
+ 1st Qu.:1.000         1st Qu.:2.000   1st Qu.:1.000  
+ Median :2.000         Median :4.000   Median :2.000  
+ Mean   :1.787         Mean   :3.254   Mean   :1.787  
+ 3rd Qu.:2.000         3rd Qu.:4.000   3rd Qu.:2.000  
+ Max.   :4.000         Max.   :5.000   Max.   :4.000  
+> 
+> summary(data)
+      Age           Gender      Job Satisfaction Job Characteristics
+ Min.   :20.0   Min.   :1.000   Min.   :1.000    Min.   :1.000      
+ 1st Qu.:33.0   1st Qu.:1.000   1st Qu.:1.000    1st Qu.:2.000      
+ Median :38.0   Median :1.000   Median :1.000    Median :5.000      
+ Mean   :39.1   Mean   :1.426   Mean   :1.631    Mean   :3.705      
+ 3rd Qu.:44.0   3rd Qu.:2.000   3rd Qu.:2.000    3rd Qu.:5.000      
+ Max.   :64.0   Max.   :2.000   Max.   :4.000    Max.   :5.000      
+ Years Worked for Present Employer Promotion Likliness Can Make Decisions Budgetary Decisions
+ Min.   : 0.080                    Min.   :1.000       Min.   :1.000      Min.   :1.000      
+ 1st Qu.: 2.000                    1st Qu.:2.000       1st Qu.:2.000      1st Qu.:1.000      
+ Median : 5.000                    Median :4.000       Median :2.000      Median :1.000      
+ Mean   : 8.224                    Mean   :3.287       Mean   :2.279      Mean   :1.451      
+ 3rd Qu.:11.000                    3rd Qu.:5.000       3rd Qu.:3.000      3rd Qu.:2.000      
+ Max.   :52.250                    Max.   :5.000       Max.   :4.000      Max.   :2.000      
+ Pride in Organization    Loyalty         Culture     
+ Min.   :1.000         Min.   :1.000   Min.   :1.000  
+ 1st Qu.:1.000         1st Qu.:2.000   1st Qu.:1.000  
+ Median :2.000         Median :4.000   Median :2.000  
+ Mean   :1.787         Mean   :3.254   Mean   :1.787  
+ 3rd Qu.:2.000         3rd Qu.:4.000   3rd Qu.:2.000  
+ Max.   :4.000         Max.   :5.000   Max.   :4.000  
+> 
+> numerical_columns <- c("Age", "Promotion Likliness", "Can Make Decisions", "Budgetary Decisions", "Pride in Organization", "Loyalty", "Culture")
+> 
+> boxplot(data$Age, main = "Boxplot of Age", ylab = "Age", col = "lightblue", border = "black")
+> 
+> boxplot(data$`Promotion Likliness`, main = "Boxplot of Promotion Likliness", ylab = "Promotion Likliness", col = "lightblue", border = "black")
+> 
+> boxplot(data$`Can Make Decisions`, main = "Boxplot of Can Make Decisions", ylab = "Can Make Decisions", col = "lightblue", border = "black")
+> 
+> boxplot(data$`Budgetary Decisions`, main = "Boxplot of Budgetary Decisions", ylab = "Budgetary Decisions", col = "lightblue", border = "black")
+> 
+> boxplot(data$`Pride in Organization`, main = "Boxplot of Pride in Organization", ylab = "Pride in Organization", col = "lightblue", border = "black")
+> 
+> boxplot(data$Loyalty, main = "Boxplot of Loyalty", ylab = "Loyalty", col = "lightblue", border = "black")
+> 
+> boxplot(data$Culture, main = "Boxplot of Culture", ylab = "Culture", col = "lightblue", border = "black")
+> 
+> str(data)
+tibble [122 × 11] (S3: tbl_df/tbl/data.frame)
+ $ Age                              : num [1:122] 35 33 23 60 35 34 61 59 37 30 ...
+ $ Gender                           : num [1:122] 1 1 1 1 1 2 2 1 2 1 ...
+ $ Job Satisfaction                 : num [1:122] 2 2 1 1 2 2 1 2 1 1 ...
+ $ Job Characteristics              : num [1:122] 4 3 1 1 1 1 1 5 5 5 ...
+ $ Years Worked for Present Employer: num [1:122] 3 9 1.5 20 3 6 0.75 1.5 3 5 ...
+ $ Promotion Likliness              : num [1:122] 1 5 1 3 3 1 5 2 4 2 ...
+ $ Can Make Decisions               : num [1:122] 2 2 2 2 2 2 3 1 3 2 ...
+ $ Budgetary Decisions              : num [1:122] 1 1 2 2 1 2 2 2 1 1 ...
+ $ Pride in Organization            : num [1:122] 2 2 1 1 2 2 2 2 2 1 ...
+ $ Loyalty                          : num [1:122] 5 2 5 1 4 4 4 4 2 2 ...
+ $ Culture                          : num [1:122] 2 1 2 1 2 4 1 1 3 2 ...
+> data$Gender <- factor(data$Gender, levels = c(1, 2), labels = c("Male", "Female"))
+> data$`Job Satisfaction` <- factor(data$`Job Satisfaction`, levels = c(1, 2, 3, 4), labels = c("Very Satisfied", "Moderately Satisfied", "A Little Dissatisfied", "Very Dissatisfied"))
+> data$`Job Characteristics` <- factor(data$`Job Characteristics`, levels = c(1, 2, 3, 4, 5), labels = ("High Income", "No Danger of Being Fired", "Flexible Hours", "Opportunities for Advancement", "Enjoying the Work"))
+Error: unexpected ',' in "data$`Job Characteristics` <- factor(data$`Job Characteristics`, levels = c(1, 2, 3, 4, 5), labels = ("High Income","
+> # Converting columns to factors
+> data$Gender <- factor(data$Gender, levels = c(1, 2), labels = c("Male", "Female"))
+> data$`Job Satisfaction` <- factor(data$`Job Satisfaction`, levels = c(1, 2, 3, 4), labels = c("Very Satisfied", "Moderately Satisfied", "A Little Dissatisfied", "Very Dissatisfied"))
+> data$`Job Characteristics` <- factor(data$`Job Characteristics`, levels = c(1, 2, 3, 4, 5), labels = c("High Income", "No Danger of Being Fired", "Flexible Hours", "Opportunities for Advancement", "Enjoying the Work"))
+> data$`Promotion Likliness` <- factor(data$`Promotion Likliness`, levels = c(1, 2, 3, 4, 5), labels = c("Very Likely", "Likely", "Not Sure", "Unlikely", "Very Unlikely"))
+> data$`Can Make Decisions` <- factor(data$`Can Make Decisions`, levels = c(1, 2, 3, 4), labels = c("Always", "Much of the Time", "Sometimes", "Never"))
+> data$`Budgetary Decisions` <- factor(data$`Budgetary Decisions`, levels = c(1, 2), labels = c("Yes", "No"))
+> data$`Pride in Organization` <- factor(data$`Pride in Organization`, levels = c(1, 2, 3, 4), labels = c("Very Proud", "Somewhat Proud", "Indifferent", "Not At All Proud"))
+> data$Loyalty <- factor(data$Loyalty, levels = c(1, 2, 3, 4, 5), labels = c("Very Likely", "Likely", "Not Sure", "Unlikely", "Very Unlikely"))
+> data$Culture <- factor(data$Culture, levels = c(1, 2, 3, 4, 5), labels = c("Very Good", "Good", "So So", "Bad", "Very Bad"))
+> 
+> data$Gender <- factor(data$Gender, levels = c(1, 2), labels = c("Male", "Female"))
+> 
+> data$`Job Satisfaction` <- factor(data$`Job Satisfaction`, levels = c(1, 2, 3, 4), labels = c("Very Satisfied", "Moderately Satisfied", "A Little Dissatisfied", "Very Dissatisfied"))
+> 
+> data$`Job Characteristics` <- factor(data$`Job Characteristics`, levels = c(1, 2, 3, 4, 5), labels = c("High Income", "No Danger of Being Fired", "Flexible Hours", "Opportunities for Advancement", "Enjoying the Work"))
+> 
+> data$`Promotion Likliness` <- factor(data$`Promotion Likliness`, levels = c(1, 2, 3, 4, 5), labels = c("Very Likely", "Likely", "Not Sure", "Unlikely", "Very Unlikely"))
+> 
+> data$`Can Make Decisions` <- factor(data$`Can Make Decisions`, levels = c(1, 2, 3, 4), labels = c("Always", "Much of the Time", "Sometimes", "Never"))
+> 
+> data$`Budgetary Decisions` <- factor(data$`Budgetary Decisions`, levels = c(1, 2), labels = c("Yes", "No"))
+> 
+> data$`Pride in Organization` <- factor(data$`Pride in Organization`, levels = c(1, 2, 3, 4), labels = c("Very Proud", "Somewhat Proud", "Indifferent", "Not At All Proud"))
+> 
+> data$Loyalty <- factor(data$Loyalty, levels = c(1, 2, 3, 4, 5), labels = c("Very Likely", "Likely", "Not Sure", "Unlikely", "Very Unlikely"))
+> 
+> data$Culture <- factor(data$Culture, levels = c(1, 2, 3, 4, 5), labels = c("Very Good", "Good", "So So", "Bad", "Very Bad"))
+> 
+> str(data)
+tibble [122 × 11] (S3: tbl_df/tbl/data.frame)
+ $ Age                              : num [1:122] 35 33 23 60 35 34 61 59 37 30 ...
+ $ Gender                           : Factor w/ 2 levels "Male","Female": NA NA NA NA NA NA NA NA NA NA ...
+ $ Job Satisfaction                 : Factor w/ 4 levels "Very Satisfied",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Job Characteristics              : Factor w/ 5 levels "High Income",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Years Worked for Present Employer: num [1:122] 3 9 1.5 20 3 6 0.75 1.5 3 5 ...
+ $ Promotion Likliness              : Factor w/ 5 levels "Very Likely",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Can Make Decisions               : Factor w/ 4 levels "Always","Much of the Time",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Budgetary Decisions              : Factor w/ 2 levels "Yes","No": NA NA NA NA NA NA NA NA NA NA ...
+ $ Pride in Organization            : Factor w/ 4 levels "Very Proud","Somewhat Proud",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Loyalty                          : Factor w/ 5 levels "Very Likely",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Culture                          : Factor w/ 5 levels "Very Good","Good",..: NA NA NA NA NA NA NA NA NA NA ...
+> 
+> hist(data$Age, 
++      main = "Distribution of Age", 
++      xlab = "Age", 
++      col = "lightblue", 
++      border = "black", 
++      breaks = 15)
+> barplot(table(data$Gender), 
++         main = "Gender Distribution", 
++         xlab = "Gender", 
++         ylab = "Count", 
++         col = c("lightblue", "pink"))
+> barplot(table(data$`Job Satisfaction`), 
++         main = "Job Satisfaction Distribution", 
++         xlab = "Satisfaction Level", 
++         ylab = "Count", 
++         col = "lightgreen")
+> barplot(table(data$`Job Characteristics`), 
++         main = "Job Characteristics", 
++         xlab = "Characteristic", 
++         ylab = "Count", 
++         col = "lightcoral")
+> hist(data$`Years Worked for Present Employer`, 
++      main = "Years Worked for Present Employer", 
++      xlab = "Years Worked", 
++      col = "lightyellow", 
++      border = "black", 
++      breaks = 10)
+> barplot(table(data$`Promotion Likliness`), 
++         main = "Promotion Likliness", 
++         xlab = "Likelihood of Promotion", 
++         ylab = "Count", 
++         col = "lightblue")
+> barplot(table(data$`Can Make Decisions`), 
++         main = "Decision-Making Ability", 
++         xlab = "Decision-Making Frequency", 
++         ylab = "Count", 
++         col = "lightgreen")
+> barplot(table(data$`Budgetary Decisions`), 
++         main = "Budgetary Decision Participation", 
++         xlab = "Participation", 
++         ylab = "Count", 
++         col = c("lightpink", "lightblue"))
+> barplot(table(data$`Pride in Organization`), 
++         main = "Pride in Organization", 
++         xlab = "Pride Level", 
++         ylab = "Count", 
++         col = "lightyellow")
+> 
+> barplot(table(data$Loyalty), 
++         main = "Loyalty to Organization", 
++         xlab = "Loyalty Level", 
++         ylab = "Count", 
++         col = "lightblue")
+> barplot(table(data$Culture), 
++         main = "Workplace Culture", 
++         xlab = "Culture Rating", 
++         ylab = "Count", 
++         col = "lightgreen")
+> # Scatter plot: Job Satisfaction vs Promotion Likelihood
+> plot(data$JobSatisfaction, data$PromotionLikliness, 
++      main = "Job Satisfaction vs Promotion Likliness", 
++      xlab = "Job Satisfaction", 
++      ylab = "Promotion Likliness", 
++      pch = 19, 
++      col = "green")
+Error in plot.window(...) : need finite 'xlim' values
+In addition: Warning messages:
+1: Unknown or uninitialised column: `JobSatisfaction`. 
+2: Unknown or uninitialised column: `PromotionLikliness`. 
+3: In min(x) : no non-missing arguments to min; returning Inf
+4: In max(x) : no non-missing arguments to max; returning -Inf
+5: In min(x) : no non-missing arguments to min; returning Inf
+6: In max(x) : no non-missing arguments to max; returning -Inf
+> colnames(data)
+ [1] "Age"                               "Gender"                           
+ [3] "Job Satisfaction"                  "Job Characteristics"              
+ [5] "Years Worked for Present Employer" "Promotion Likliness"              
+ [7] "Can Make Decisions"                "Budgetary Decisions"              
+ [9] "Pride in Organization"             "Loyalty"                          
+[11] "Culture"                          
+> 
+> plot(data$`Job Satisfaction`, data$`Promotion Likliness`, 
++      main = "Job Satisfaction vs Promotion Likliness", 
++      xlab = "Job Satisfaction", 
++      ylab = "Promotion Likliness", 
++      pch = 19, 
++      col = "green")
+Error in axis(1, at = (xat[1L:nx] + xat[2L:(nx + 1L)] - off)/2, labels = xaxlabels,  : 
+  no locations are finite
+> data$`Job Satisfaction` <- factor(data$`Job Satisfaction`, 
++                                   levels = c(1, 2, 3, 4),
++                                   labels = c("Very Satisfied", "Moderately Satisfied", 
++                                              "A Little Dissatisfied", "Very Dissatisfied"))
+> 
+> data$`Promotion Likliness` <- factor(data$`Promotion Likliness`, 
++                                      levels = c(1, 2, 3, 4, 5),
++                                      labels = c("Very Likely", "Likely", "Not Sure", 
++                                                 "Unlikely", "Very Unlikely"))
+> 
+> plot(data$`Job Satisfaction`, data$`Promotion Likliness`, 
++      main = "Job Satisfaction vs Promotion Likliness", 
++      xlab = "Job Satisfaction", 
++      ylab = "Promotion Likliness", 
++      pch = 19, 
++      col = "green")
+Error in axis(1, at = (xat[1L:nx] + xat[2L:(nx + 1L)] - off)/2, labels = xaxlabels,  : 
+  no locations are finite
+> boxplot(data$`Promotion Likliness` ~ data$`Job Satisfaction`, 
++         main = "Job Satisfaction vs Promotion Likliness", 
++         xlab = "Job Satisfaction", 
++         ylab = "Promotion Likliness", 
++         col = "lightblue")
+Error in plot.window(xlim = xlim, ylim = ylim, log = log, yaxs = pars$yaxs) : 
+  need finite 'ylim' values
+In addition: Warning messages:
+1: In min(x) : no non-missing arguments to min; returning Inf
+2: In max(x) : no non-missing arguments to max; returning -Inf
+> sum(is.na(data$`Job Satisfaction`))
+[1] 122
+> sum(is.na(data$`Promotion Likliness`))
+[1] 122
+> 
+> str(data$`Job Satisfaction`)
+ Factor w/ 4 levels "Very Satisfied",..: NA NA NA NA NA NA NA NA NA NA ...
+> str(data$`Promotion Likliness`)
+ Factor w/ 5 levels "Very Likely",..: NA NA NA NA NA NA NA NA NA NA ...
+> 
+> head(data$`Job Satisfaction`)
+[1] <NA> <NA> <NA> <NA> <NA> <NA>
+Levels: Very Satisfied Moderately Satisfied A Little Dissatisfied Very Dissatisfied
+> head(data$`Promotion Likliness`)
+[1] <NA> <NA> <NA> <NA> <NA> <NA>
+Levels: Very Likely Likely Not Sure Unlikely Very Unlikely
+> 
+> data$`Job Satisfaction` <- factor(data$`Job Satisfaction`, 
++                                   levels = c(1, 2, 3, 4),
++                                   labels = c("Very Satisfied", "Moderately Satisfied", 
++                                              "A Little Dissatisfied", "Very Dissatisfied"))
+> 
+> data$`Promotion Likliness` <- factor(data$`Promotion Likliness`, 
++                                      levels = c(1, 2, 3, 4, 5),
++                                      labels = c("Very Likely", "Likely", "Not Sure", 
++                                                 "Unlikely", "Very Unlikely"))
+> 
+> data <- read.csv("your_dataset.csv", colClasses = c("Job Satisfaction" = "factor", "Promotion Likliness" = "factor"))
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'your_dataset.csv': No such file or directory
+> table(data$`Job Satisfaction`)
+
+       Very Satisfied  Moderately Satisfied A Little Dissatisfied     Very Dissatisfied 
+                    0                     0                     0                     0 
+> table(data$`Promotion Likliness`)
+
+  Very Likely        Likely      Not Sure      Unlikely Very Unlikely 
+            0             0             0             0             0 
+> 
+> head(data)
+# A tibble: 6 × 11
+    Age Gender `Job Satisfaction` `Job Characteristics` `Years Worked for Present Employer`
+  <dbl> <fct>  <fct>              <fct>                                               <dbl>
+1    35 NA     NA                 NA                                                    3  
+2    33 NA     NA                 NA                                                    9  
+3    23 NA     NA                 NA                                                    1.5
+4    60 NA     NA                 NA                                                   20  
+5    35 NA     NA                 NA                                                    3  
+6    34 NA     NA                 NA                                                    6  
+# ℹ 6 more variables: `Promotion Likliness` <fct>, `Can Make Decisions` <fct>,
+#   `Budgetary Decisions` <fct>, `Pride in Organization` <fct>, Loyalty <fct>, Culture <fct>
+> 
+> Typical_Employee_Survey_Data <- read_excel("Downloads/Typical_Employee_Survey_Data.xlsx", 
++                                            col_names = TRUE)
+New names:                                                                                       
+• `1` -> `1...2`
+• `2` -> `2...3`
+• `1` -> `1...6`
+• `2` -> `2...7`
+• `1` -> `1...8`
+• `2` -> `2...9`
+• `2` -> `2...11`
+> 
+> colnames(Typical_Employee_Survey_Data)
+ [1] "35"     "1...2"  "2...3"  "4"      "3"      "1...6"  "2...7"  "1...8"  "2...9"  "5"     
+[11] "2...11"
+> 
+> head(Typical_Employee_Survey_Data)
+# A tibble: 6 × 11
+   `35` `1...2` `2...3`   `4`   `3` `1...6` `2...7` `1...8` `2...9`   `5` `2...11`
+  <dbl>   <dbl>   <dbl> <dbl> <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dbl>    <dbl>
+1    33       1       2     3  9          5       2       1       2     2        1
+2    23       1       1     1  1.5        1       2       2       1     5        2
+3    60       1       1     1 20          3       2       2       1     1        1
+4    35       1       2     1  3          3       2       1       2     4        2
+5    34       2       2     1  6          1       2       2       2     4        4
+6    61       2       1     1  0.75       5       3       2       2     4        1
+> 
+> colnames(data) <- c("Age", "Gender", "Job Satisfaction", "Job Characteristics", "Years Worked for Present Employer", "Promotion Likliness", "Can Make Decisions", "Budgetary Decisions", "Pride in Organization", "Loyalty", "Culture")
+> > head(Typical_Employee_Survey_Data)
+Error: unexpected '>' in ">"
+> head(Typical_Employee_Survey_Data)
+# A tibble: 6 × 11
+   `35` `1...2` `2...3`   `4`   `3` `1...6` `2...7` `1...8` `2...9`   `5` `2...11`
+  <dbl>   <dbl>   <dbl> <dbl> <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dbl>    <dbl>
+1    33       1       2     3  9          5       2       1       2     2        1
+2    23       1       1     1  1.5        1       2       2       1     5        2
+3    60       1       1     1 20          3       2       2       1     1        1
+4    35       1       2     1  3          3       2       1       2     4        2
+5    34       2       2     1  6          1       2       2       2     4        4
+6    61       2       1     1  0.75       5       3       2       2     4        1
+> 
+> colnames(Typical_Employee_Survey_Data) <- c("Age", "Gender", "Job Satisfaction", 
++                                             "Job Characteristics", 
++                                             "Years Worked for Present Employer", 
++                                             "Promotion Likliness", 
++                                             "Can Make Decisions", 
++                                             "Budgetary Decisions", 
++                                             "Pride in Organization", 
++                                             "Loyalty", "Culture")
+> 
+> head(Typical_Employee_Survey_Data)
+# A tibble: 6 × 11
+    Age Gender `Job Satisfaction` `Job Characteristics` `Years Worked for Present Employer`
+  <dbl>  <dbl>              <dbl>                 <dbl>                               <dbl>
+1    33      1                  2                     3                                9   
+2    23      1                  1                     1                                1.5 
+3    60      1                  1                     1                               20   
+4    35      1                  2                     1                                3   
+5    34      2                  2                     1                                6   
+6    61      2                  1                     1                                0.75
+# ℹ 6 more variables: `Promotion Likliness` <dbl>, `Can Make Decisions` <dbl>,
+#   `Budgetary Decisions` <dbl>, `Pride in Organization` <dbl>, Loyalty <dbl>, Culture <dbl>
+> 
+> colnames(Typical_Employee_Survey_Data) <- c("Age", "Gender", "Job Satisfaction", "Job Characteristics", 
++                                             "Years Worked for Present Employer", "Promotion Likliness", 
++                                             "Can Make Decisions", "Budgetary Decisions", 
++                                             "Pride in Organization", "Loyalty", "Culture")
+> 
+> # 5-point summary
+> summary(Typical_Employee_Survey_Data)
+      Age            Gender     Job Satisfaction Job Characteristics
+ Min.   :20.00   Min.   :1.00   Min.   :1.000    Min.   :1.000      
+ 1st Qu.:33.00   1st Qu.:1.00   1st Qu.:1.000    1st Qu.:2.000      
+ Median :38.00   Median :1.00   Median :1.000    Median :5.000      
+ Mean   :39.13   Mean   :1.43   Mean   :1.628    Mean   :3.702      
+ 3rd Qu.:44.00   3rd Qu.:2.00   3rd Qu.:2.000    3rd Qu.:5.000      
+ Max.   :64.00   Max.   :2.00   Max.   :4.000    Max.   :5.000      
+ Years Worked for Present Employer Promotion Likliness Can Make Decisions Budgetary Decisions
+ Min.   : 0.080                    Min.   :1.000       Min.   :1.000      Min.   :1.000      
+ 1st Qu.: 2.000                    1st Qu.:2.000       1st Qu.:2.000      1st Qu.:1.000      
+ Median : 5.000                    Median :4.000       Median :2.000      Median :1.000      
+ Mean   : 8.267                    Mean   :3.306       Mean   :2.281      Mean   :1.455      
+ 3rd Qu.:11.000                    3rd Qu.:5.000       3rd Qu.:3.000      3rd Qu.:2.000      
+ Max.   :52.250                    Max.   :5.000       Max.   :4.000      Max.   :2.000      
+ Pride in Organization    Loyalty        Culture     
+ Min.   :1.000         Min.   :1.00   Min.   :1.000  
+ 1st Qu.:1.000         1st Qu.:2.00   1st Qu.:1.000  
+ Median :2.000         Median :4.00   Median :2.000  
+ Mean   :1.785         Mean   :3.24   Mean   :1.785  
+ 3rd Qu.:2.000         3rd Qu.:4.00   3rd Qu.:2.000  
+ Max.   :4.000         Max.   :5.00   Max.   :4.000  
+> 
+> # Boxplots for numerical columns
+> boxplot(Typical_Employee_Survey_Data$Age, main = "Boxplot for Age", ylab = "Age")
+> boxplot(Typical_Employee_Survey_Data$`Years Worked for Present Employer`, 
++         main = "Boxplot for Years Worked", ylab = "Years Worked")
+> 
+> Typical_Employee_Survey_Data$Gender <- factor(Typical_Employee_Survey_Data$Gender, 
++                                               levels = c(1, 2), labels = c("Male", "Female"))
+> Typical_Employee_Survey_Data$`Job Satisfaction` <- factor(Typical_Employee_Survey_Data$`Job Satisfaction`, 
++                                                           levels = c(1, 2, 3, 4),
++                                                           labels = c("Very Satisfied", "Moderately Satisfied", 
++                                                                      "A Little Dissatisfied", "Very Dissatisfied"))
+> Typical_Employee_Survey_Data$`Promotion Likliness` <- factor(Typical_Employee_Survey_Data$`Promotion Likliness`, 
++                                                              levels = c(1, 2, 3, 4, 5),
++                                                              labels = c("Very Likely", "Likely", "Not Sure", 
++                                                                         "Unlikely", "Very Unlikely"))
+> 
+> # Histograms for numerical data
+> hist(Typical_Employee_Survey_Data$Age, main = "Histogram of Age", xlab = "Age", col = "lightblue")
+> hist(Typical_Employee_Survey_Data$`Years Worked for Present Employer`, main = "Histogram of Years Worked", 
++      xlab = "Years Worked", col = "lightgreen")
+> 
+> # Barplot for categorical data
+> barplot(table(Typical_Employee_Survey_Data$`Job Satisfaction`), 
++         main = "Barplot for Job Satisfaction", col = "lightpink")
+> barplot(table(Typical_Employee_Survey_Data$`Promotion Likliness`), 
++         main = "Barplot for Promotion Likliness", col = "lightyellow")
+> 
+> # Histogram for Age
+> hist(Typical_Employee_Survey_Data$Age, 
++      main = "Histogram of Age", 
++      xlab = "Age", 
++      col = "lightblue", 
++      border = "black")
+> hist(Typical_Employee_Survey_Data$`Years Worked for Present Employer`, 
++      main = "Histogram of Years Worked", 
++      xlab = "Years Worked", 
++      col = "lightgreen", 
++      border = "black")
+> barplot(table(Typical_Employee_Survey_Data$`Job Satisfaction`), 
++         main = "Job Satisfaction Distribution", 
++         col = "lightpink", 
++         xlab = "Job Satisfaction", 
++         ylab = "Frequency")
+> barplot(table(Typical_Employee_Survey_Data$`Promotion Likliness`), 
++         main = "Promotion Likliness Distribution", 
++         col = "lightyellow", 
++         xlab = "Promotion Likliness", 
++         ylab = "Frequency")
+> barplot(table(Typical_Employee_Survey_Data$Gender), 
++         main = "Gender Distribution", 
++         col = "lightblue", 
++         xlab = "Gender", 
++         ylab = "Frequency")
+> barplot(table(Typical_Employee_Survey_Data$Culture), 
++         main = "Culture Distribution", 
++         col = "lightcoral", 
++         xlab = "Culture", 
++         ylab = "Frequency")
+> plot(Typical_Employee_Survey_Data$`Years Worked for Present Employer`, 
++      Typical_Employee_Survey_Data$`Budgetary Decisions`, 
++      main = "Years Worked vs Budgetary Decisions", 
++      xlab = "Years Worked for Present Employer", 
++      ylab = "Budgetary Decisions", 
++      pch = 19, 
++      col = "red")
+> 
+> plot(Typical_Employee_Survey_Data$Age, 
++      Typical_Employee_Survey_Data$`Job Characteristics`, 
++      main = "Age vs Job Characteristics", 
++      xlab = "Age", 
++      ylab = "Job Characteristics", 
++      pch = 19, 
++      col = "green")
+> plot(Typical_Employee_Survey_Data$Age, 
++      Typical_Employee_Survey_Data$`Years Worked for Present Employer`, 
++      main = "Age vs Years Worked for Present Employer", 
++      xlab = "Age", 
++      ylab = "Years Worked for Present Employer", 
++      pch = 19, 
++      col = "blue")
+> plot(Typical_Employee_Survey_Data$Age, 
++      Typical_Employee_Survey_Data$`Job Characteristics`, 
++      main = "Age vs Job Characteristics", 
++      xlab = "Age", 
++      ylab = "Job Characteristics", 
++      pch = 19, 
++      col = "green")
+> 
+> plot(Typical_Employee_Survey_Data$`Years Worked for Present Employer`, 
++      Typical_Employee_Survey_Data$`Budgetary Decisions`, 
++      main = "Years Worked vs Budgetary Decisions", 
++      xlab = "Years Worked for Present Employer", 
++      ylab = "Budgetary Decisions", 
++      pch = 19, 
++      col = "red")
+> plot(Typical_Employee_Survey_Data$`Job Characteristics`, 
++      Typical_Employee_Survey_Data$`Budgetary Decisions`, 
++      main = "Job Characteristics vs Budgetary Decisions", 
++      xlab = "Job Characteristics", 
++      ylab = "Budgetary Decisions", 
++      pch = 19, 
++      col = "purple")
+> plot(Typical_Employee_Survey_Data$`Job Satisfaction`, 
++      Typical_Employee_Survey_Data$`Job Characteristics`, 
++      main = "Job Satisfaction vs Job Characteristics", 
++      xlab = "Job Satisfaction", 
++      ylab = "Job Characteristics", 
++      pch = 19, 
++      col = "purple")
+> # Scatter Plot: Promotion Likliness vs Job Satisfaction
+> plot(Typical_Employee_Survey_Data$`Promotion Likliness`, 
++      Typical_Employee_Survey_Data$`Job Satisfaction`, 
++      main = "Promotion Likliness vs Job Satisfaction", 
++      xlab = "Promotion Likliness", 
++      ylab = "Job Satisfaction", 
++      pch = 19, 
++      col = "orange")
+> # Scatter Plot: Pride in Organization vs Loyalty
+> plot(Typical_Employee_Survey_Data$`Pride in Organization`, 
++      Typical_Employee_Survey_Data$Loyalty, 
++      main = "Pride in Organization vs Loyalty", 
++      xlab = "Pride in Organization", 
++      ylab = "Loyalty", 
++      pch = 19, 
++      col = "blue")
+> # Scatter Plot: Can Make Decisions vs Budgetary Decisions
+> plot(Typical_Employee_Survey_Data$`Can Make Decisions`, 
++      Typical_Employee_Survey_Data$`Budgetary Decisions`, 
++      main = "Can Make Decisions vs Budgetary Decisions", 
++      xlab = "Can Make Decisions", 
++      ylab = "Budgetary Decisions", 
++      pch = 19, 
++      col = "red")
+> 
+> # Scatter Plot: Promotion Likliness vs Job Satisfaction
+> plot(Typical_Employee_Survey_Data$`Promotion Likliness`, 
++      Typical_Employee_Survey_Data$`Job Satisfaction`, 
++      main = "Promotion Likliness vs Job Satisfaction", 
++      xlab = "Promotion Likliness", 
++      ylab = "Job Satisfaction", 
++      pch = 19, 
++      col = "orange")
+> 
+> # Bar plot for Job Characteristics
+> barplot(table(Typical_Employee_Survey_Data$`Job Characteristics`), 
++         main = "Job Characteristics Distribution", 
++         col = "lightblue", 
++         xlab = "Job Characteristics", 
++         ylab = "Frequency")
+> 
+> # Bar plot for Can Make Decisions
+> barplot(table(Typical_Employee_Survey_Data$`Can Make Decisions`), 
++         main = "Can Make Decisions Distribution", 
++         col = "lightgreen", 
++         xlab = "Can Make Decisions", 
++         ylab = "Frequency")
+> 
+> 
+> # Bar plot for Budgetary Decisions
+> barplot(table(Typical_Employee_Survey_Data$`Budgetary Decisions`), 
++         main = "Budgetary Decisions Distribution", 
++         col = "lightcoral", 
++         xlab = "Budgetary Decisions", 
++         ylab = "Frequency")
+> 
+> # Bar plot for Pride in Organization
+> barplot(table(Typical_Employee_Survey_Data$`Pride in Organization`), 
++         main = "Pride in Organization Distribution", 
++         col = "lightseagreen", 
++         xlab = "Pride in Organization", 
++         ylab = "Frequency")
+> 
+> # Bar plot for Loyalty
+> barplot(table(Typical_Employee_Survey_Data$`Loyalty`), 
++         main = "Loyalty Distribution", 
++         col = "lightyellow", 
++         xlab = "Loyalty", 
++         ylab = "Frequency")
+> 
+> save.image("~/Desktop/Project1.Rmd.RData")
+
+
+I'm terribly sorry for the formatting. I've been working on the assignment and seem to have gotten confused, thinking the console was the right place to work. 
+If I had more time I would go in and clean up my mistakes but I have on a tight deadline to submit this before Shabbat.
+I will attatch a document I have been working out of.
