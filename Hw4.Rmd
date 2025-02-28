@@ -1,0 +1,123 @@
+---
+title: "Penguin Data Analysis"
+author: "Eden Greenfest"
+date: "2025-02-28"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+
+library(forecast)
+library(TTR)
+library(readr)
+
+
+penguin_data <- read.csv("/Users/edengreenfest/Desktop/TSeries/pen.csv")
+head(penguin_data)
+
+penguin_ts <- ts(penguin_data$Penguin.Population, start = c(2022, 1), frequency = 12)
+
+#exploratory analysis:
+
+#plot----
+plot(penguin_ts, main = "Penguin Population Over Time", ylab = "Population", xlab = "Time", col = "blue")
+
+#Explanation of plot: There is a clear seasonal trend in penguin population over time that repeats yearly. This is possibly because of mating seasons, or environmental factors.
+
+#ACF----
+acf(penguin_ts, main = "ACF of Penguin Population", lag.max = 50)
+
+#Explanation: The ACF plot shows a strong seasonal pattern corresponding to yearly intervals, proving that penguin population is influenced by reoccurring yearly cycles.
+
+#decomposition-----
+decomposed_data <- decompose(penguin_ts)
+plot(decomposed_data)
+
+#Explanation: The decomposition of the penguin population time series reveals different components: trend, observed, seasonal, and random fluctuations. The plot shows the overall increasing trend in the population and clear seasonal patterns that appear annually that suggest consistent variations in population over time.
+
+
+#Mean forecast------
+mean_forecast <- meanf(penguin_ts, 5)
+plot(mean_forecast)
+
+#Explanation: The mean forecast plot shows a flat, straight blue line, which represents the forecasted penguin population for the next 5 months based solely on the historical average. This method assumes that the population will remain constant, with no change in trends or seasonality over the forecast period which isn't necessarily the case in real life.
+
+
+#Naive forecast----
+naive_forecast <- naive(penguin_ts, 5)  
+plot(naive_forecast)
+
+#Explanation: This plot shows a blue line that mirrors the last observed value, assuming that the penguin population will remain the same as the most recent observation for the next 5 months. This method is useful for capturing short-term trends but doesn't account for seasonality or long-term changes.
+
+#Random Walk with Drift----
+rwf_forecast <- rwf(penguin_ts, 5, drift = TRUE)
+plot(rwf_forecast)
+
+
+#Explanation: The random walk with drift forecast plot shows a blue line that not only carries the last observed value forward but also includes a slight upward drift based on the overall movement of the data. This method assumes that the penguin population will continue in the same direction, adjusting for the drift observed in past trends.
+
+# Seasonal Naive
+snaive_forecast <- snaive(penguin_ts,5)
+plot(snaive_forecast)
+
+#Explanation:The seasonal naive forecast shows a repeating pattern that follows the seasonality of the data, with the forecasted values directly replicating the previous year's values for the same months. This method captures the seasonal fluctuations but does not account for any overall trend in the penguin population, reflecting only the cyclical nature of the data.
+
+# Moving Averages
+MA5_forecast <- ma(penguin_ts,order=5)
+plot(MA5_forecast)
+
+MA9_forecast <- ma(penguin_ts,order=9)
+plot(MA9_forecast)
+
+#Explanation: The moving average forecast smooths out fluctuations in the data by averaging the values over a 5 or 9 month period. This method helps to reveal the underlying trend of the penguin population by reducing short-term noise, but may not capture sharp changes or seasonal patterns as effectively as more advanced forecasting techniques.
+
+#Exponential Smoothing
+ets_model <- ets(penguin_ts)
+ets_forecast <- forecast(ets_model, h=5)
+plot(ets_forecast)
+
+#Explanation: The model separates the time series data into different components. The "Level" graph indicates a steady incline in the data, representing the overall increase. The "Slope" graph shows some cyclical behavior but doesn't indicate a strong trend, suggesting that the data has fluctuating growth. The "Season" graph captures the cyclical patterns or seasonality, displaying recurring fluctuations over time. The "Observed" graph displays the actual data, helping to compare how well the model fits the data and reveals the cyclical nature of the time series.
+
+#Holt Winters
+HW_forecast <- HoltWinters(penguin_ts)
+HW_pred <- forecast(HW_forecast, h=5)
+plot(HW_pred)
+
+#The Holt-Winters method is an exponential smoothing technique that captures both trend and seasonality the population growth of penguins.
+
+#All models in one chat
+plot(mean_forecast$mean, type = "l", col = "blue", ylim = range(penguin_ts), ylab="Population", xlab="Time")
+lines(naive_forecast$mean, col = "red")
+lines(rwf_forecast$mean, col = "green")
+lines(snaive_forecast$mean, col = "black")
+lines(MA5_forecast, col = "pink")
+lines(MA9_forecast, col = "blue")
+
+
+#Accuracy Measure
+rmse <- function(actual, predicted) {
+  sqrt(mean((actual - predicted)^2, na.rm = TRUE))
+}
+
+rmse_mean <- rmse(penguin_ts, fitted(mean_forecast))  
+rmse_naive <- rmse(penguin_ts, fitted(naive_forecast))  
+rmse_rw_drift <- rmse(penguin_ts, fitted(rwf_forecast))  
+rmse_snaive <- rmse(penguin_ts, fitted(snaive_forecast))
+rmse_ets <- rmse(penguin_ts, fitted(ets_forecast))  
+
+accuracy_results <- data.frame(
+  Model = c("Mean", "Naive", "RW Drift", "Seasonal Naive", "ETS"),
+  RMSE = c(rmse_mean, rmse_naive, rmse_rw_drift, rmse_snaive, rmse_ets)
+)
+
+print(accuracy_results)
+
+best_model <- accuracy_results$Model[which.min(accuracy_results$RMSE)]
+cat("The best model based on RMSE is:", best_model)
+
+#Explanation: Based on RMSE, the best forecasting model is the ETS model, as it has the lowest error compared to all other models. This suggests that ETS effectively captures the underlying patterns in the penguin population data, making it the most reliable choice for future predictions.
+
+
+```
