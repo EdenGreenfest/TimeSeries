@@ -1,0 +1,103 @@
+---
+title: "PracticeMidterm1"
+author: "Eden Greenfest"
+date: "2025-03-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+##Plot and Inference
+
+#import
+library(fpp2)
+library(readr)
+
+attributes(arrivals)
+
+#Make sure just US data
+UsArrivals <- arrivals[, "US"]
+
+#plot
+plot(UsArrivals)
+
+#Interpretation of plot: This graph shows the number of arrivals to Australia from the US countries starting from approximately 1980-2012. From this graph we see a clear upward trend with seasonal upticks.
+
+#--------------------------------------------
+
+##Central Tendency
+
+#Min, 1st Q, Median, 3rd Q, Max
+fivenum(UsArrivals)
+#Mean
+mean(UsArrivals)
+#Boxplot
+boxplot(UsArrivals)
+
+#Explanation of boxplot: The minimum of this data is roughly 23.72, with a max of roughly 136.09 which are represented by the thin black lines towards the top and bottom of the group. The thicker black line in the middle of the boxplot represents the median which is approximately 85.88. The top and bottom of the grey box represents the upper and lower quartiles which are roughly 63.95 and 108.98. 
+
+#--------------------------------------------
+
+##Decomposition
+
+decomposed <- decompose(UsArrivals)
+plot(decomposed)
+
+#The time series is seasonal, following an additive structure as it remains the same in a repetitive seasonal trend.
+
+decomposedSeasonal <- decomposed$seasonal
+print(decomposedSeasonal)
+
+#This implies that the data is taken quarterly. for the first quarter, there is a positive 6.78, the second quarter has a negative 7.97, the third a negative 4.72, and the fourth a positive 5.9 effect.
+
+#decomposedMonths <- tapply(decomposedSeasonal, cycle(decomposedSeasonal), mean)
+#decomposedMonths
+
+seasonAdjusted <- UsArrivals - decomposedSeasonal
+plot(UsArrivals)
+lines(seasonAdjusted, col = 'red')
+
+#It seems that the seasonally adjusted graph closely follows the original data set with some variations. It retains the cyclical pattern but appears to be smoother. This suggests that while seasonality is present, its fluctuations are relatively moderate compared to the overall trend and irregular variations.
+
+#--------------------------------------------
+
+##Naive
+
+Naive <- naive(UsArrivals)
+plot(Naive)
+
+##Residuals
+
+residuals <- residuals(Naive)
+plot(residuals)
+#Based on the plot, there seems to be some type of seasonal trend that remains. This implies that the Naive method did not effectively caputre seasonality.
+
+
+##Histogram
+hist(residuals)
+#Based on this distribution, it seems there is a bit of a negative skew in the residuals.
+
+##Fitted and Actual
+residuals <- residuals(Naive)
+fitted <- fitted(Naive)
+plot(as.numeric(fitted), as.numeric(residuals))
+plot(as.numeric(UsArrivals), as.numeric(residuals))
+
+
+##ACF
+acf(Naive)
+#Seeing that there are clear spikes in the black lines beyond the 95% confidence interval, showing the naïve model has not fully captured all patterns in the data. Therefore, it seems the model is missing seasonal trends.
+
+##Accuracy Metrics
+forecast::accuracy(Naive)
+##Doing forecast:: because I keep getting an error message that calls a different library. This forces it to use the accurcay() from forecast
+
+#Forecast
+forecast <- forecast(UsArrivals)
+plot(forecast)
+#This plot shows the forecast until 2015. Because RMSE and MAE are relatively high, there is a large forecast error. This is probably because the Naïve method ignores seasonality and trends.
+
+
+
+```
+
